@@ -5,4 +5,4 @@ let res = 0;
 for (let i = 1; i <= number; i++) {
   res += i;
 }
-console.log(res)
+console.log(res);

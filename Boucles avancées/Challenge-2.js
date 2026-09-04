@@ -3,13 +3,13 @@ const prompt = require("prompt-sync")();
 
 let numbre = Number(prompt("Entre un number: "));
 
-for (let i = 1; i <= numbre; i++) {
+for (let i = 0; i < numbre; i++) {
   let ligne = "";
-  for (let j = 0; j < numbre - i; j++) {
-    ligne += " ";
+  for (let space = 0; space < numbre - i; space++) {
+    ligne = ligne + " ";
   }
-  for (let k = 0; k < i * 2 - 1; k++) {
-    ligne += "*";
+  for (let etoil = 0; etoil < i *2 + 1; etoil++) {
+    ligne = ligne + "✰";
   }
   console.log(ligne);
 }
