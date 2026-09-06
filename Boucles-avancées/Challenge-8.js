@@ -1,21 +1,25 @@
 // Recherche Dichotomique
 
 function dichotomique(arr, num) {
-  let right = 0;
-  let left = arr.length - 1;
+  let left = 0;
+  let right = arr.length - 1;
   while (right <= left) {
     let mid = Math.floor((right + left) / 2);
     if (arr[mid] === num) {
       console.log("found");
       return arr[mid];
     } else if (arr[mid] < num) {
-      right = mid + 1;
+      left = mid + 1;
     } else {
-      left = mid - 1;
+      right = mid - 1;
     }
   }
   console.log("not found");
 }
+
+
+
+
 
 // ///////////////////////////
 // function linearSearch(arr, num) {

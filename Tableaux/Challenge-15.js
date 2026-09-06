@@ -29,3 +29,18 @@ function fusionDeTbleaux(array1, array2) {
 }
 
 console.log(fusionDeTbleaux([1, 2, 3, 4], [5, 6, 6, 7, 8]));
+
+// function searchMatrix(matrix, target) {
+//   let [rows, cols] = [matrix.length, matrix[0].length];
+//   let [top,bot] = [0,rows-1]
+//   return rows,bot
+// }
+
+// console.log(
+//   searchMatrix([
+//     [1, 3, 5, 7],
+//     [10, 11, 16, 20],
+//     [23, 30, 34, 60],
+//   ]),
+//   3,
+// );
