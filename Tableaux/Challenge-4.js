@@ -14,10 +14,14 @@ function displayNums(number) {
 
 function findMaximum(array) {
   let max = array[0];
+  let secondMax = 0;
   for (let i = 0; i <= array.length - 1; i++) {
-    max > array[i] ? max : (max = array[i]);
+    if (max < array[i])
+      secondMax = max
+    max = array[i];
+
   }
-  return max;
+  return secondMax;
 }
 console.log(findMaximum(displayNums(sizeOfArray)));
 
