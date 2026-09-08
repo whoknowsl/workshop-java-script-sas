@@ -67,8 +67,9 @@ function aficherLeMenu() {
     console.log(`*1-Ajouter un apprenant (prenom + note)
 *2-Afficher tous les apprenants enregistres
 *3-Rechercher un apprenant par son prenom
-*4-Supprimer un apprenant par son prenom
-*5-Quitter le programme
+*4-la note d'un apprenant existant
+*5-Supprimer un apprenant par son prenom
+*0-Quitter le programme
 `)
 }
 
@@ -83,19 +84,22 @@ function programme(number) {
             const nom = prompt("Entre votre nom: ");
             const prenom = prompt("Entre votre prenom: ")
             const note = Number(prompt("Entre votre notes: "))
-            console.log(ajouteUnAppreant(nom, note));
+            console.log(ajouteUnAppreant(prenom, nom, note));
             break;
         case 2:
             displayTheStudents(data);
             break;
         case 3:
-            console.log(rechercherApprenantParPrenom(data, prompt("Entre votre nom: ")));
+            console.log(rechercherApprenantParPrenomOrNom(data, prompt("Souhaitez-vous effectuer une recherche par nom ou prenom? ").toLocaleLowerCase()));
+
             break;
         case 4:
             updateNotes(data, prompt("Enter le nome de etduiant que vois changer les note: "));
+
             break;
         case 5:
             console.log(removeEtudent(data, prompt("Entre le nom de etudien pur suprime: ")))
+
             break;
         case 0:
             break;
@@ -105,24 +109,61 @@ function programme(number) {
     }
 }
 programme(numberDesired);
-//the function i used 
-function ajouteUnAppreant(nom, note) {
-    if (data.some(apprenant => apprenant.Nom === nom)) {
-        const newNote = Number(prompt("Entre a novelle point: "));
-        const target = data.find(apprenant => { return apprenant.Nom === nom });
-        if (target) {
-            target.Note.push(newNote);
+//the functions 
+function ajouteUnAppreant(prenom, nom, note) {
+    const recherer = prompt("Souhaitez-vous effectuer une recherche par nom ou prenom? ").toLocaleLowerCase();
+    if (recherer === "nom") {
+        if (data.some(apprenant => apprenant.Nom === nom)) {
+            console.log("Cette etudient deja exestie: ");
+            const answer = prompt("Voulez-vous ajouter un nevaux note yes or no[Y/N]? ").toLocaleLowerCase();
+            if (answer === "y") {
+                const newNote = Number(prompt("Entre a novelle point: "));
+                const target = data.find(apprenant => { return apprenant.Nom === nom });
+                if (target) {
+                    target.Note.push(newNote);
+                }
+                return target
+            } else if (answer === "n") {
+                const target = data.find(apprenant => { return apprenant.Nom === nom });
+                return target
+            }
+        } else {
+            apprenant.Nom = nom;
+            apprenant.Prenom = prenom;
+            apprenant.Note = note;
+            data.push(apprenant);
+            return `Nom: ${apprenant.Nom},
+Prenom: ${apprenant.Prenom},
+Note: ${apprenant.Note}`
         }
-
-    } else {
-        apprenant.Nom = nom;
-        apprenant.Prenom = prenom;
-        apprenant.Note = note;
-        data.push(apprenant);
-
+    } else if (recherer === "prenom") {
+        if (data.some(apprenant => apprenant.Prenom === prenom)) {
+            console.log("Cette etudient deja exestie: ");
+            const answer = prompt("Voulez-vous ajouter un nevaux note yes or no[Y/N]? ").toLocaleLowerCase();
+            if (answer === "y") {
+                const newNote = Number(prompt("Entre a novelle point: "));
+                const target = data.find(apprenant => { return apprenant.Prenom === prenom });
+                if (target) {
+                    target.Note.push(newNote);
+                }
+                return target
+            } else if (answer === "n") {
+                const target = data.find(apprenant => { return apprenant.Prenom === prenom });
+                return target
+            }
+        } else {
+            apprenant.Nom = nom;
+            apprenant.Prenom = prenom;
+            apprenant.Note = note;
+            data.push(apprenant);
+            return `Nom: ${apprenant.Nom},
+Prenom: ${apprenant.Prenom},
+Note: ${apprenant.Note}`
+        }
     }
-    return data;
+
 }
+//
 function displayTheStudents(array) {
     array.forEach((apprenant, i) => {
         console.log(`student number ${i + 1}:
@@ -132,15 +173,27 @@ function displayTheStudents(array) {
     });
 
 }
-function rechercherApprenantParPrenom(array, recherch) {
-
-    const target = array.find(apprenant => { return apprenant.Nom === recherch });
-    if (target) {
-        return `Name: ${target.Nom}
+function rechercherApprenantParPrenomOrNom(array, recherch) {
+    if (recherch === 'nom') {
+        const recherchNom = prompt("Entrez votre nom: ")
+        const target = array.find(apprenant => { return apprenant.Nom === recherchNom });
+        if (target) {
+            return `Name: ${target.Nom}
 Prenom: ${target.Prenom}
 Notes: ${target.Note}`;
-    } else {
-        return "The student not found";
+        } else {
+            return "The student not found";
+        }
+    } else if (recherch === 'prenom') {
+        const recherchPrenom = prompt("Entrez votre prenom: ")
+        const target = array.find(apprenant => { return apprenant.Prenom === recherchPrenom });
+        if (target) {
+            return `Name: ${target.Nom}
+Prenom: ${target.Prenom}
+Notes: ${target.Note}`;
+        } else {
+            return "The student not found";
+        }
     }
 }
 function updateNotes(array, recherch) {
